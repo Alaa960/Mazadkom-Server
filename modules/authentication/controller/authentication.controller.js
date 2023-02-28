@@ -10,21 +10,21 @@ const UserLoginController = async (req, res) => {
             error: errors.array()
         })
     }
-    const userCredential = new LoginInput();
     const { email, password } = req.body;
+    const userCredential = new LoginInput();
     userCredential.email = email;
     userCredential.password = password;
-    let user = await LoginUser(userCredential)
+    const user = await LoginUser(userCredential);
     if (user.length > 0) {
         const accessToken = jwt.sign({ user }, 'Secret', { expiresIn: 60 * 60 });
         res.json({
             user: user[0],
             accessToken: accessToken
-        })
+        });
     }
-    res.json({
-        error: 'invalid credential'
-    })
+    res.status(404).json({
+        error: 'User not found'
+    });
 }
 module.exports = {
     UserLoginController
