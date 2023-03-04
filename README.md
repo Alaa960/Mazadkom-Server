@@ -4,5 +4,11 @@ Register
 name , email,password  : errors (is required)
 }
 (2) = status 201 : {
-user created successfully 
+{
+    "result": {
+        "name": "Bassam Abu Lefah",
+        "email": "watany@gmail.com",
+        "password": "Bassam123"
+    }
+}
 }
