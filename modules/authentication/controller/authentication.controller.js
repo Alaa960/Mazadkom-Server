@@ -19,10 +19,10 @@ const UserLoginController = async (req, res) => {
         const accessToken = jwt.sign({ user }, 'Secret', { expiresIn: 60 * 60 });
         res.json({
             user: user[0],
-            accessToken: accessToken
+            token: accessToken
         });
     }
-    res.status(404).json({
+    res.status(400).json({
         error: 'User not found'
     });
 }
