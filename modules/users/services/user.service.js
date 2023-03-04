@@ -6,7 +6,8 @@ const UserRegister = async (user) => {
         {
             email: user.email,
             name: user.name,
-            password: user.password
+            password: user.password,
+            phone: user.phone
         }
     )
     return user;
