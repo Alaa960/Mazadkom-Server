@@ -11,12 +11,13 @@ const UserRegisterController = async (req, res) => {
         })
     }
     const user = new UserInput()
-    const { name, email, password } = req.body;
+    const { name, email, password, phone } = req.body;
     user.name = name;
     user.email = email;
     user.password = password;
+    user.phone = phone;
     let RegisterdUser = await UserRegister(user);
-    res.json({
+    res.status(201).json({
         result: RegisterdUser
     })
 }
@@ -44,9 +45,10 @@ const getUserById = async (req, res) => {
 const UpdateUserById = async (req, res) => {
     const user = new UpdateUserInput()
     const { user_id } = req.params;
-    const { name, password } = req.body;
+    const { name, password, phone } = req.body;
     user.name = name;
     user.password = password;
+    user.phone = phone;
     const updateUser = await Updateuser(user_id, user)
     res.status(200).json({
         success: true

@@ -25,7 +25,8 @@ const GetUser = async (user_id) => {
 const Updateuser = async (user_id, user) => {
     const updatedUser = await knex(USERS).where('user_id', user_id).update({
         name: user.name,
-        password: user.password
+        password: user.password,
+        phone: user.phone
     })
     return updatedUser
 }
