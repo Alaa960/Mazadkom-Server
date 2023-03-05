@@ -1,4 +1,10 @@
 const USERS = 'users';
+const FILE_MANAGER = 'filemanager';
+const PRODUCTS = 'products';
+const PRODUCTS_IMG = 'products_img';
 module.exports = {
-    USERS
+    USERS,
+    FILE_MANAGER,
+    PRODUCTS,
+    PRODUCTS_IMG
 }

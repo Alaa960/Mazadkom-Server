@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 const UserRouter = require('./modules/users/Routes/user.route');
 const AuthenticationRouter = require('./modules/authentication/Routes/authentication.route');
+const ProductsRouter = require('./modules/products/Routes/product.route');
 var app = express();
 
 // view engine setup
@@ -19,7 +20,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('', UserRouter);
-app.use('', AuthenticationRouter)
+app.use('', AuthenticationRouter);
+app.use('', ProductsRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
