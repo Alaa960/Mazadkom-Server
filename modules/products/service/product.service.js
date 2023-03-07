@@ -1,5 +1,5 @@
 const knex = require('../../../DBConnection/DBConnection')
-const { PRODUCTS, PRODUCTS_IMG } = require('../../main/TablesName')
+const { PRODUCTS, PRODUCTS_IMG, FILE_MANAGER } = require('../../main/TablesName')
 //add product service
 const AddProduct = async (product) => {
     const products = await knex(PRODUCTS).insert({
@@ -17,7 +17,14 @@ const ProductImages = async (productImg) => {
         img_id: productImg.img_id
     })
 }
+//get all products
+const GetProducts = async () => {
+    const products = await knex(PRODUCTS).from(PRODUCTS, PRODUCTS_IMG, FILE_MANAGER).join(FILE_MANAGER)
+        .returning('*')
+    return products
+}
 module.exports = {
     AddProduct,
-    ProductImages
+    ProductImages,
+    GetProducts
 }

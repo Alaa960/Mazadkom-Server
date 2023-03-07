@@ -1,7 +1,7 @@
 const FileCreateInput = require('../../fileManager/input/file.input');
 const { fileCreate } = require('../../fileManager/service/file.service');
 const AddProductInput = require('../input/product.input');
-const { AddProduct, ProductImages } = require('../service/product.service');
+const { AddProduct, ProductImages, GetProducts } = require('../service/product.service');
 const ProductImg = require('../input/product.img.input');
 //add product controller 
 const AddProductController = async (req, res) => {
@@ -32,6 +32,14 @@ const AddProductController = async (req, res) => {
         result: AddeddProductId
     })
 }
+//get all products
+const GetAllProducts = async (req, res) => {
+    const products = await GetProducts()
+    res.status(200).json({
+        products: products
+    })
+}
 module.exports = {
-    AddProductController
+    AddProductController,
+    GetAllProducts
 }
