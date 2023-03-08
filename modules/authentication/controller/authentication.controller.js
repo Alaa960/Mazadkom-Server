@@ -16,10 +16,10 @@ const UserLoginController = async (req, res) => {
     userCredential.password = password;
     const user = await LoginUser(userCredential);
     if (user.length > 0) {
-        const accessToken = jwt.sign({ user }, 'Secret', { expiresIn: 60 * 60 });
+        const token = jwt.sign({ user }, 'Secret', { expiresIn: 60000 * 600000 });
         res.json({
             user: user[0],
-            token: accessToken
+            token: token
         });
     }
     res.status(400).json({
