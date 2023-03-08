@@ -2,12 +2,13 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const cors = require('cors')
 var logger = require('morgan');
-
 const UserRouter = require('./modules/users/Routes/user.route');
 const AuthenticationRouter = require('./modules/authentication/Routes/authentication.route');
 const ProductsRouter = require('./modules/products/Routes/product.route');
 var app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +27,6 @@ app.use('', ProductsRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
@@ -37,5 +37,4 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;

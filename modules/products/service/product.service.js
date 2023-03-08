@@ -23,8 +23,14 @@ const GetProducts = async () => {
         .returning('*')
     return products
 }
+//get product by id 
+const GetSingleProduct = async (product_id) => {
+    const product = await knex(PRODUCTS).from(PRODUCTS, FILE_MANAGER).where('product_id', product_id).join(FILE_MANAGER).returning("*");
+    return product[0];
+}
 module.exports = {
     AddProduct,
     ProductImages,
-    GetProducts
+    GetProducts,
+    GetSingleProduct
 }
