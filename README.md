@@ -12,3 +12,15 @@ name , email,password  : errors (is required)
     }
 }
 }
+-------------------------------
+Login : 
+The user should insert his email & passowrd 
+status(200) => {
+user : {
+email:email@email.com
+password : 123456789
+name:User Name,
+role:USER | ADMIN,
+}
+toke : 'dkskdjhakljdhkasjahdkjhskjahjkdh'
+}
