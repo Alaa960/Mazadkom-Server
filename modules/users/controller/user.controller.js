@@ -2,7 +2,8 @@ const { validationResult } = require('express-validator');
 const UserInput = require('../inputs/user.input');
 const { UserRegister, getAllUsers, GetUser, Updateuser, DeleteUserService } = require('../services/user.service');
 const UpdateUserInput = require('../inputs/update.user.input');
-const { ADMIN, USER } = require('../../Roles/roles')
+var bcrypt = require('bcryptjs');
+
 //user register
 const UserRegisterController = async (req, res) => {
     const errors = validationResult(req);
@@ -12,30 +13,24 @@ const UserRegisterController = async (req, res) => {
         })
     }
     const user = new UserInput()
-    const { name, email, password, phone, role } = req.body;
+    const { name, email, password, phone, isAdmin } = req.body;
     user.name = name;
     user.email = email;
-    user.password = password;
+    user.password = bcrypt.hashSync(password, 8);
     user.phone = phone;
-    user.role = role;
+    user.isAdmin = isAdmin;
     let RegisterdUser = await UserRegister(user);
-    res.status(201).json({
+    res.json({
         result: RegisterdUser
     })
 }
 //get all users controller 
 const GetAllUsersController = async (req, res) => {
-    const { role } = req.params;
-    if (role === ADMIN) {
-        const users = await getAllUsers();
-        res.status(200).json({
-            users: users
-        })
-    } else {
-        res.json({
-            error: "you don't have any permissions"
-        })
-    }
+    const users = await getAllUsers();
+    res.status(200).json({
+        users: users
+    })
+
 }
 //get user by id 
 const getUserById = async (req, res) => {
@@ -65,17 +60,11 @@ const UpdateUserById = async (req, res) => {
 }
 //delete user by id 
 const DeleteUserById = async (req, res) => {
-    const { user_id, role } = req.params;
-    if (role === ADMIN) {
-        const deletedUser = await DeleteUserService(user_id);
-        res.status(200).json({
-            success: true
-        })
-    } else {
-        res.json({
-            message: "Tou don't have permissions"
-        })
-    }
+    const { user_id } = req.params;
+    const deletedUser = await DeleteUserService(user_id);
+    res.status(200).json({
+        success: true
+    })
 }
 module.exports = {
     UserRegisterController,

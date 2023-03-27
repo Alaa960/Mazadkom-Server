@@ -3,6 +3,7 @@ const { PRODUCTS, PRODUCTS_IMG, FILE_MANAGER } = require('../../main/TablesName'
 //add product service
 const AddProduct = async (product) => {
     const products = await knex(PRODUCTS).insert({
+        user_id: product.user_id,
         category: product.category,
         title: product.title,
         time: product.time,

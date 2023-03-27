@@ -8,7 +8,7 @@ const UserRegister = async (user) => {
             name: user.name,
             password: user.password,
             phone: user.phone,
-            role: user.role
+            isAdmin: false
         }
     )
     return user;
