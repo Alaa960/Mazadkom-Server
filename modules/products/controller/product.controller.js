@@ -25,8 +25,9 @@ const AddProductController = async (req, res) => {
     let ids = await Promise.all(fileIds)
     const product = new AddProductInput()
     const user_id = req.user.user_id;
-    const { category, title, initial_price, time } = req.body;
     product.user_id = user_id;
+    const { category, title, initial_price, time } = req.body;
+
     product.category = category;
     product.title = title;
     product.initial_price = initial_price;

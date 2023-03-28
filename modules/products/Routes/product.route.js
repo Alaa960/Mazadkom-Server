@@ -4,8 +4,9 @@ const upload = require('../../fileManager/helper/multerObj');
 const router = express.Router();
 const { AddProductController, GetAllProducts, GetProductById } = require('../controller/product.controller')
 const { PorductValidation } = require('../validation/product.validation')
-const { IsAdmin, isUser } = require('../../middleware/role.middleware')
+const { isUser } = require('../../middleware/role.middleware');
+const isAuther = require('../../middleware/check.middleware');
 router.post('/add', [Authenticated, isUser], upload.array('photo', 10), PorductValidation, AddProductController)
     .get('/products', GetAllProducts)
-    .get('/product/:product_id', GetProductById)
+    .get('/product/:product_id', [Authenticated, isUser, isAuther], GetProductById)
 module.exports = router

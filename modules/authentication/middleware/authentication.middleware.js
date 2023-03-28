@@ -4,7 +4,7 @@ const Authenticated = (req, res, next) => {
     if (token) {
         try {
             const user = jwt.verify(token, 'Secret');
-            req.user = user.user[0];
+            req.user = user.user;
             next();
         } catch (err) {
             res.json({

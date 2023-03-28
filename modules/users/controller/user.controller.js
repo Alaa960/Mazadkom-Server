@@ -8,7 +8,7 @@ var bcrypt = require('bcryptjs');
 const UserRegisterController = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(422).json({
+        return res.status(422).json({
             error: errors.array()
         })
     }
@@ -37,7 +37,7 @@ const getUserById = async (req, res) => {
     const { user_id } = req.params;
     const user = await GetUser(user_id)
     if (user.length > 0) {
-        res.status(200).json({
+        return res.status(200).json({
             user: user
         })
     }
@@ -54,7 +54,7 @@ const UpdateUserById = async (req, res) => {
     user.password = password;
     user.phone = phone;
     const updateUser = await Updateuser(user_id, user)
-    res.status(200).json({
+    return res.status(200).json({
         success: true
     })
 }
