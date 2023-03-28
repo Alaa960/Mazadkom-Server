@@ -7,7 +7,7 @@ const Authenticated = (req, res, next) => {
             req.user = user.user;
             next();
         } catch (err) {
-            res.json({
+            return res.json({
                 error: 'invalid token'
             })
         }
