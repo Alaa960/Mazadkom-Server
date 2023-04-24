@@ -1,7 +1,7 @@
 const FileCreateInput = require('../../fileManager/input/file.input');
 const { fileCreate } = require('../../fileManager/service/file.service');
 const AddProductInput = require('../input/product.input');
-const { AddProduct, ProductImages, GetProducts, GetSingleProduct } = require('../service/product.service');
+const { AddProduct, ProductImages, GetProducts, GetSingleProduct, GetProductsImages } = require('../service/product.service');
 const ProductImg = require('../input/product.img.input');
 const { validationResult } = require('express-validator');
 //add product controller 
@@ -16,7 +16,7 @@ const AddProductController = async (req, res) => {
     const files = req.files;
     const fileIds = files.map(async (file) => {
         let fileInput = new FileCreateInput();
-        fileInput.new_name = file.fileName;
+        fileInput.new_name = file.filename;
         fileInput.old_name = file.originalname;
         fileInput.path = file.path;
         const file_id = await fileCreate(fileInput);
@@ -46,8 +46,9 @@ const AddProductController = async (req, res) => {
 //get all products
 const GetAllProducts = async (req, res) => {
     const products = await GetProducts()
+    const images = await GetProductsImages()
     res.status(200).json({
-        products: products
+        products: products, images
     })
 }
 //get single product

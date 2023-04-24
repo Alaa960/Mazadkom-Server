@@ -20,9 +20,13 @@ const ProductImages = async (productImg) => {
 }
 //get all products
 const GetProducts = async () => {
-    const products = await knex(PRODUCTS).from(PRODUCTS, PRODUCTS_IMG, FILE_MANAGER).join(FILE_MANAGER)
-        .returning('*')
+    const products = await knex(PRODUCTS).select('*')
     return products
+}
+//get images
+const GetProductsImages = async () => {
+    const images = await knex(FILE_MANAGER).select('*')
+    return images
 }
 //get product by id 
 const GetSingleProduct = async (product_id) => {
@@ -33,5 +37,6 @@ module.exports = {
     AddProduct,
     ProductImages,
     GetProducts,
-    GetSingleProduct
+    GetSingleProduct,
+    GetProductsImages
 }

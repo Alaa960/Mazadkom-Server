@@ -6,7 +6,7 @@ const { AddProductController, GetAllProducts, GetProductById } = require('../con
 const { PorductValidation } = require('../validation/product.validation')
 const { isUser } = require('../../middleware/role.middleware');
 const isAuther = require('../../middleware/check.middleware');
-router.post('/add', [Authenticated, isUser], upload.array('photo', 10), PorductValidation, AddProductController)
+router.post('/add', [Authenticated, isUser], upload.array('photo', 1), PorductValidation, AddProductController)
     .get('/products', GetAllProducts)
     .get('/product/:product_id', [Authenticated, isUser, isAuther], GetProductById)
 module.exports = router
