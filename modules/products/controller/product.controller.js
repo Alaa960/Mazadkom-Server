@@ -46,9 +46,9 @@ const AddProductController = async (req, res) => {
 //get all products
 const GetAllProducts = async (req, res) => {
     const products = await GetProducts()
-    const images = await GetProductsImages()
+    // const images = await GetProductsImages()
     res.status(200).json({
-        products: products, images
+        products: products
     })
 }
 //get single product

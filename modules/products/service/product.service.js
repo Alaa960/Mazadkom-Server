@@ -20,7 +20,11 @@ const ProductImages = async (productImg) => {
 }
 //get all products
 const GetProducts = async () => {
-    const products = await knex(PRODUCTS).select('*')
+    const products = await knex.from(PRODUCTS).join(PRODUCTS_IMG, function () {
+        this.on('products.product_id', '=', 'products_img.product_id')
+    }).join(FILE_MANAGER, function () {
+        this.on('filemanager.file_id', '=', 'products_img.img_id')
+    })
     return products
 }
 //get images
