@@ -1,7 +1,7 @@
 const FileCreateInput = require('../../fileManager/input/file.input');
 const { fileCreate } = require('../../fileManager/service/file.service');
 const AddProductInput = require('../input/product.input');
-const { AddProduct, ProductImages, GetProducts, GetSingleProduct, GetProductsImages } = require('../service/product.service');
+const { AddProduct, ProductImages, GetProducts, GetSingleProduct, DeleteProduct, GetUserProducts } = require('../service/product.service');
 const ProductImg = require('../input/product.img.input');
 const { validationResult } = require('express-validator');
 //add product controller 
@@ -46,7 +46,6 @@ const AddProductController = async (req, res) => {
 //get all products
 const GetAllProducts = async (req, res) => {
     const products = await GetProducts()
-    // const images = await GetProductsImages()
     res.status(200).json({
         products: products
     })
@@ -59,9 +58,26 @@ const GetProductById = async (req, res) => {
         product: product
     })
 }
-
+//delete product controller 
+const DeleteProductController = async (req, res) => {
+    const { product_id } = req.params;
+    const deletedProduct = await DeleteProduct(product_id);
+    res.status(200).json({
+        success: deletedProduct
+    })
+}
+//get user products
+const GetUsersProductsController = async (req, res) => {
+    const { user_id } = req.params;
+    const product = await GetUserProducts(user_id)
+    res.status(200).json({
+        products: product
+    })
+}
 module.exports = {
     AddProductController,
     GetAllProducts,
-    GetProductById
+    GetProductById,
+    DeleteProductController,
+    GetUsersProductsController
 }
