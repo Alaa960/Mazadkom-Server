@@ -1,5 +1,5 @@
 const knex = require('../../../DBConnection/DBConnection')
-const { PRODUCTS, PRODUCTS_IMG, FILE_MANAGER } = require('../../main/TablesName')
+const { PRODUCTS, PRODUCTS_IMG, FILE_MANAGER, AUCTIONS, USERS } = require('../../main/TablesName')
 //add product service
 const AddProduct = async (product) => {
     const products = await knex(PRODUCTS).insert({
@@ -48,11 +48,24 @@ const GetUserProducts = async (user_id) => {
     })
     return products
 }
+//make an auction service
+const MakeAnAuctionService = async (auction) => {
+    console.log(auction)
+    const auctions = await knex.from(AUCTIONS).where('user_id', auction.user_id).where('product_id', auction.product_id).insert({
+        mount_auction: auction.mount_auction,
+        user_id: auction.user_id,
+        product_id: auction.product_id
+    })
+    return auctions
+}
+//get greater mount
+
 module.exports = {
     AddProduct,
     ProductImages,
     GetProducts,
     GetSingleProduct,
     DeleteProduct,
-    GetUserProducts
+    GetUserProducts,
+    MakeAnAuctionService
 }

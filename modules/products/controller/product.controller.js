@@ -1,9 +1,10 @@
 const FileCreateInput = require('../../fileManager/input/file.input');
 const { fileCreate } = require('../../fileManager/service/file.service');
 const AddProductInput = require('../input/product.input');
-const { AddProduct, ProductImages, GetProducts, GetSingleProduct, DeleteProduct, GetUserProducts } = require('../service/product.service');
+const { AddProduct, ProductImages, GetProducts, GetSingleProduct, DeleteProduct, GetUserProducts, MakeAnAuctionService } = require('../service/product.service');
 const ProductImg = require('../input/product.img.input');
 const { validationResult } = require('express-validator');
+const MakeAuctionInput = require('../input/makeauction.input')
 //add product controller 
 const AddProductController = async (req, res) => {
     const errors = validationResult(req);
@@ -74,10 +75,26 @@ const GetUsersProductsController = async (req, res) => {
         products: product
     })
 }
+//make an auction
+const MakeAnAuction = async (req, res) => {
+    const { product_id } = req.params;
+    const auction = new MakeAuctionInput();
+    const user_id = req.user.user_id;
+    const { mount_auction } = req.body
+
+    auction.mount_auction = mount_auction
+    auction.user_id = user_id
+    auction.product_id = product_id
+    const Auctioned = await MakeAnAuctionService(auction)
+    res.status(200).json({
+        result: Auctioned
+    })
+}
 module.exports = {
     AddProductController,
     GetAllProducts,
     GetProductById,
     DeleteProductController,
-    GetUsersProductsController
+    GetUsersProductsController,
+    MakeAnAuction
 }
