@@ -30,7 +30,15 @@ const GetProducts = async () => {
 
 //get product by id 
 const GetSingleProduct = async (product_id) => {
-    const product = await knex(PRODUCTS).from(PRODUCTS, FILE_MANAGER).where('product_id', product_id).join(FILE_MANAGER).returning("*");
+    const product = await knex(PRODUCTS).join(PRODUCTS_IMG, function () {
+        this.on('products.product_id', 'products_img.product_id')
+    })
+        .join(FILE_MANAGER, function () {
+            this.on('filemanager.file_id', 'products_img.img_id')
+        })
+        .join(AUCTIONS, function () {
+            this.on('auctions.product_id', 'products.product_id')
+        })
     return product[0];
 }
 //delete product
@@ -59,7 +67,10 @@ const MakeAnAuctionService = async (auction) => {
     return auctions
 }
 //get greater mount
-
+const getGreaterAuction = async (product_id) => {
+    const max_auction = await knex.from(AUCTIONS).where('product_id', product_id).max('mount_auction');
+    return max_auction;
+}
 module.exports = {
     AddProduct,
     ProductImages,
@@ -67,5 +78,6 @@ module.exports = {
     GetSingleProduct,
     DeleteProduct,
     GetUserProducts,
-    MakeAnAuctionService
+    MakeAnAuctionService,
+    getGreaterAuction
 }

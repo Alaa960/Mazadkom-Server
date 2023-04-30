@@ -1,7 +1,7 @@
 const FileCreateInput = require('../../fileManager/input/file.input');
 const { fileCreate } = require('../../fileManager/service/file.service');
 const AddProductInput = require('../input/product.input');
-const { AddProduct, ProductImages, GetProducts, GetSingleProduct, DeleteProduct, GetUserProducts, MakeAnAuctionService } = require('../service/product.service');
+const { AddProduct, ProductImages, GetProducts, GetSingleProduct, DeleteProduct, GetUserProducts, MakeAnAuctionService, getGreaterAuction } = require('../service/product.service');
 const ProductImg = require('../input/product.img.input');
 const { validationResult } = require('express-validator');
 const MakeAuctionInput = require('../input/makeauction.input')
@@ -90,11 +90,20 @@ const MakeAnAuction = async (req, res) => {
         result: Auctioned
     })
 }
+//get greater mount auction
+const getGreaterAuctionContaroller = async (req, res) => {
+    const { product_id } = req.params;
+    const auctions = await getGreaterAuction(product_id)
+    res.json({
+        result: auctions
+    })
+}
 module.exports = {
     AddProductController,
     GetAllProducts,
     GetProductById,
     DeleteProductController,
     GetUsersProductsController,
-    MakeAnAuction
+    MakeAnAuction,
+    getGreaterAuctionContaroller
 }
