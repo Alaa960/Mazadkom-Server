@@ -68,8 +68,8 @@ const MakeAnAuctionService = async (auction) => {
 }
 //get greater mount
 const getGreaterAuction = async (product_id) => {
-    const max_auction = await knex.from(AUCTIONS).where('product_id', product_id).max('mount_auction');
-    return max_auction;
+    const max_auction = await knex.from(AUCTIONS).where('product_id', product_id).max('mount_auction', { as: 'mount_auction' });
+    return max_auction[0];
 }
 module.exports = {
     AddProduct,

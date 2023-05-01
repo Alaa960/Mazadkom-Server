@@ -12,5 +12,5 @@ router.post('/add', [Authenticated, isUser], upload.array('photo', 1), PorductVa
     .get('/productsuser/:user_id', [Authenticated, isUser], GetUsersProductsController)
     .delete('/product/:product_id', [Authenticated, isUser, isAuther], DeleteProductController)
     .put('/auction/:product_id', [Authenticated, isUser], MakeAnAuction)
-    .get('/mount/:product_id', getGreaterAuctionContaroller)
+    .get('/maxauctionmount/:product_id', getGreaterAuctionContaroller)
 module.exports = router
