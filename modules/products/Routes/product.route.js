@@ -7,10 +7,10 @@ const { PorductValidation } = require('../validation/product.validation')
 const { isUser } = require('../../middleware/role.middleware');
 const isAuther = require('../../middleware/check.middleware');
 router.post('/add', [Authenticated, isUser], upload.array('photo', 1), PorductValidation, AddProductController)
-    .get('/products', GetAllProducts)
+    .get('/products', [Authenticated], GetAllProducts)
     .get('/product/:product_id', [Authenticated, isUser], GetProductById)
     .get('/productsuser/:user_id', [Authenticated, isUser], GetUsersProductsController)
     .delete('/product/:product_id', [Authenticated, isUser, isAuther], DeleteProductController)
-    .put('/auction/:product_id', [Authenticated, isUser], MakeAnAuction)
+    .post('/auction/:product_id', [Authenticated, isUser], MakeAnAuction)
     .get('/maxauctionmount/:product_id', getGreaterAuctionContaroller)
 module.exports = router
