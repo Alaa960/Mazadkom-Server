@@ -7,6 +7,7 @@ var logger = require('morgan');
 const UserRouter = require('./modules/users/Routes/user.route');
 const AuthenticationRouter = require('./modules/authentication/Routes/authentication.route');
 const ProductsRouter = require('./modules/products/Routes/product.route');
+const ReportsRouter = require('./modules/reports/Routes/reports.route')
 var app = express();
 app.use(cors());
 
@@ -23,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'public/uploads')));
 app.use('/api/users', UserRouter);
 app.use('/api/auth', AuthenticationRouter);
 app.use('/api/products', ProductsRouter);
+app.use('/api/reports', ReportsRouter)
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
