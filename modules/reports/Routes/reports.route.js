@@ -1,7 +1,8 @@
 const express = require('express')
-const { makeReport } = require('../controller/reports.controller')
+const { makeReport, getAllReportsController } = require('../controller/reports.controller')
 const Authenticated = require('../../authentication/middleware/authentication.middleware')
-const { isUser } = require('../../middleware/role.middleware')
+const { isUser, IsAdmin } = require('../../middleware/role.middleware')
 const router = express.Router()
-router.post('/report', [Authenticated, isUser], makeReport)
+router.post('/report/:user_id', [Authenticated, isUser], makeReport)
+    .get('/allreports', [Authenticated, isUser], getAllReportsController)
 module.exports = router
