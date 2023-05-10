@@ -49,10 +49,10 @@ const getUserById = async (req, res) => {
 const UpdateUserById = async (req, res) => {
     const user = new UpdateUserInput()
     const { user_id } = req.params;
-    const { name, password, phone } = req.body;
+    const { name, password, email } = req.body;
     user.name = name;
-    user.password = password;
-    user.phone = phone;
+    user.password = bcrypt.hashSync(password, 8);
+    user.email = email;
     const updateUser = await Updateuser(user_id, user)
     return res.status(200).json({
         success: true
