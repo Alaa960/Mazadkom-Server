@@ -19,9 +19,7 @@ const SendMessageController = async (req, res) => {
 const GetMessagesController = async (req, res) => {
     const { from_user, product_id } = req.params
     const messages = await GetMessagesServices(from_user, product_id)
-    res.json({
-        messages: messages
-    })
+    res.send(messages)
 }
 module.exports = {
     SendMessageController,
