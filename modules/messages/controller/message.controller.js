@@ -2,13 +2,14 @@ const MessageInput = require('../input/message.input')
 const { SendMessageServices, GetMessagesServices } = require('../services/message.services')
 //send message controller
 const SendMessageController = async (req, res) => {
-    const { to_user } = req.params;
+    const { to_user, product_id } = req.params;
     const { message_content } = req.body;
     const message = new MessageInput()
     const from_user = req.user.user_id
     message.from_user = from_user
     message.message_content = message_content;
     message.to_user = to_user;
+    message.product_id = product_id;
     const messages = await SendMessageServices(message)
     res.json({
         message: messages
@@ -16,8 +17,8 @@ const SendMessageController = async (req, res) => {
 }
 //get messages controller
 const GetMessagesController = async (req, res) => {
-    const { from_user } = req.params
-    const messages = await GetMessagesServices(from_user)
+    const { from_user, product_id } = req.params
+    const messages = await GetMessagesServices(from_user, product_id)
     res.json({
         messages: messages
     })
