@@ -6,7 +6,7 @@ const { AddProductController, GetAllProducts, GetProductById, DeleteProductContr
 const { PorductValidation } = require('../validation/product.validation')
 const { isUser } = require('../../middleware/role.middleware');
 const isAuther = require('../../middleware/check.middleware');
-router.post('/add', [Authenticated, isUser], upload.array('photo', 1), PorductValidation, AddProductController)
+router.post('/add', [Authenticated, isUser], upload.array('photo', 5), PorductValidation, AddProductController)
     .get('/products', [Authenticated], GetAllProducts)
     .get('/product/:product_id', [Authenticated, isUser], GetProductById)
     .get('/productsuser/:user_id', [Authenticated, isUser], GetUsersProductsController)

@@ -48,8 +48,9 @@ const AddProductController = async (req, res) => {
 //get all products
 const GetAllProducts = async (req, res) => {
     const products = await GetProducts()
+    const images = await GetProducts()
     res.status(200).json({
-        products: products
+        products: products,
     })
 }
 //get single product
@@ -57,7 +58,7 @@ const GetProductById = async (req, res) => {
     const { product_id } = req.params;
     const product = await GetSingleProduct(product_id);
     res.status(200).json({
-        product: product
+        product: product,
     })
 }
 //delete product controller 
@@ -74,6 +75,7 @@ const GetUsersProductsController = async (req, res) => {
     const product = await GetUserProducts(user_id)
     res.status(200).json({
         products: product
+
     })
 }
 //make an auction

@@ -22,23 +22,25 @@ const ProductImages = async (productImg) => {
 }
 //get all products
 const GetProducts = async () => {
-    const products = await knex.from(PRODUCTS).join(PRODUCTS_IMG, function () {
-        this.on('products.product_id', '=', 'products_img.product_id')
-    }).join(FILE_MANAGER, function () {
-        this.on('filemanager.file_id', '=', 'products_img.img_id')
+    const products = await knex.from(PRODUCTS)
+    const result = products.map(async (product) => {
+        const prod = await knex.from(PRODUCTS_IMG).where('product_id', product.product_id).join(FILE_MANAGER, 'filemanager.file_id', '=', 'products_img.img_id')
+        product.prod = prod
+        return product
     })
-    return products
+    return Promise.all(result)
 }
 //get product by id 
 const GetSingleProduct = async (product_id) => {
-    console.log(product_id)
-    const product = await knex(PRODUCTS)
-        .join(PRODUCTS_IMG, 'products.product_id', '=', 'products_img.product_id')
-        .join(FILE_MANAGER, 'filemanager.file_id', '=', 'products_img.img_id')
-        .where('products.product_id', product_id)
-        .join(USERS, function () {
-            this.on('users.user_id', '=', 'products.user_id')
-        })
+
+    const product = await knex(PRODUCTS).where('products.product_id', product_id)
+    const result = product.map(async (single) => {
+        const prod = await knex.from(PRODUCTS_IMG).where('product_id', single.product_id).join(FILE_MANAGER, 'filemanager.file_id', '=', 'products_img.img_id')
+        single.prod = prod
+        return single
+    })
+    return Promise.all(result)
+
     return product[0]
 }
 //delete product
