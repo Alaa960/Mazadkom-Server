@@ -35,13 +35,13 @@ const GetSingleProduct = async (product_id) => {
 
     const product = await knex(PRODUCTS).where('products.product_id', product_id)
     const result = product.map(async (single) => {
-        const prod = await knex.from(PRODUCTS_IMG).where('product_id', single.product_id).join(FILE_MANAGER, 'filemanager.file_id', '=', 'products_img.img_id')
-        single.prod = prod
+        const images = await knex.from(PRODUCTS_IMG).where('product_id', single.product_id).join(FILE_MANAGER, 'filemanager.file_id', '=', 'products_img.img_id')
+        single.images = images
         return single
     })
-    return Promise.all(result)
+    return result[0]
 
-    return product[0]
+
 }
 //delete product
 const DeleteProduct = async (product_id) => {
