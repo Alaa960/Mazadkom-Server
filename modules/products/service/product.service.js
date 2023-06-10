@@ -52,12 +52,13 @@ const DeleteProduct = async (product_id) => {
 }
 //get user products
 const GetUserProducts = async (user_id) => {
-    const products = await knex.from(PRODUCTS).where('user_id', user_id).join(PRODUCTS_IMG, function () {
-        this.on('products.product_id', '=', 'products_img.product_id')
-    }).join(FILE_MANAGER, function () {
-        this.on('filemanager.file_id', '=', 'products_img.img_id')
+    const products = await knex.from(PRODUCTS).where('user_id', user_id)
+    const result = products.map(async (product) => {
+        const images = await knex.from(PRODUCTS_IMG).where('product_id', product.product_id).join(FILE_MANAGER, 'filemanager.file_id', '=', 'products_img.img_id')
+        product.images = images
+        return product
     })
-    return products
+    return Promise.all(result)
 }
 //make an auction service
 const MakeAnAuctionService = async (auction) => {
@@ -71,7 +72,7 @@ const MakeAnAuctionService = async (auction) => {
 }
 //get greater mount
 const getGreaterAuction = async (product_id) => {
-    const max_auction = await knex.from(AUCTIONS).where('product_id', product_id).max('mount_auction', { as: 'mount_auction' });
+    const max_auction = await knex.from(AUCTIONS).where('product_id', product_id).max('mount_auction', { as: 'mount_auction' })
     return max_auction[0];
 }
 module.exports = {
