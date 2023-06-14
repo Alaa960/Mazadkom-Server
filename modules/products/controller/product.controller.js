@@ -8,9 +8,8 @@ const MakeAuctionInput = require('../input/makeauction.input')
 //add product controller 
 const AddProductController = async (req, res) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
-        res.status(422).json({
+        return res.status(422).json({
             error: errors.array()
         })
     }
@@ -42,7 +41,7 @@ const AddProductController = async (req, res) => {
         await ProductImages(productImg)
     })
     res.status(201).json({
-        result: AddeddProductId
+        result: "product added successfully"
     })
 }
 //get all products

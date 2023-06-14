@@ -8,7 +8,7 @@ var bcrypt = require('bcryptjs');
 const UserLoginController = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(422).json({
+        return res.status(422).json({
             error: errors.array()
         })
     }
@@ -29,9 +29,7 @@ const UserLoginController = async (req, res) => {
             error: 'wrong password'
         })
     }
-    res.status(404).json({
-        error: 'User not found'
-    });
+
 }
 const comparePassword = (passwrod, hash) => {
     return bcrypt.compareSync(passwrod, hash)

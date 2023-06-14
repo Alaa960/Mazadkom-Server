@@ -55,7 +55,7 @@ const UpdateUserById = async (req, res) => {
     user.email = email;
     const updateUser = await Updateuser(user_id, user)
     return res.status(200).json({
-        success: true
+        success: 'updated successfully'
     })
 }
 //delete user by id 
