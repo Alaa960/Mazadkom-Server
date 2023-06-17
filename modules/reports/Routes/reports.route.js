@@ -4,5 +4,5 @@ const Authenticated = require('../../authentication/middleware/authentication.mi
 const { isUser, IsAdmin } = require('../../middleware/role.middleware')
 const router = express.Router()
 router.post('/report/:user_id', [Authenticated, isUser], makeReport)
-    .get('/allreports', [Authenticated, isUser], getAllReportsController)
+    .get('/reports', [Authenticated, IsAdmin], getAllReportsController)
 module.exports = router

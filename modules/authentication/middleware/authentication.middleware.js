@@ -11,7 +11,6 @@ const Authenticated = (req, res, next) => {
                 error: 'invalid token'
             })
         }
-
     } else {
         res.json({
             error: 'token does not exist'

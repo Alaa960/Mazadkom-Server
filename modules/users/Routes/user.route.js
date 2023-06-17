@@ -5,7 +5,7 @@ const { UserRegisterController, GetAllUsersController, getUserById, UpdateUserBy
 const Authenticated = require('../../authentication/middleware/authentication.middleware');
 const { IsAdmin, isUser } = require('../../middleware/role.middleware');
 router.post('/register', UserRegisterValidation, UserRegisterController) //regitser user
-    .get('/allUsers', [Authenticated, isUser], GetAllUsersController)//get all users
+    .get('/users', [Authenticated, IsAdmin], GetAllUsersController)//get all users
     .get('/user/:user_id', [Authenticated], getUserById)//get user by id
     .put('/updateUser/:user_id', UpdateUserById)//update user
     .delete('/user/:user_id', [Authenticated, IsAdmin], DeleteUserById)//delete user
